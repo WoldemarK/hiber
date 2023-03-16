@@ -1,7 +1,6 @@
 package com.example.hiber.model;
 
 import jakarta.persistence.*;
-
 @Entity
 @Table(name = "employees")
 public class Employee {
@@ -15,14 +14,15 @@ public class Employee {
     private String surname;
     @Column(name = "salary")
     private Long salary;
-    @Column(name = "department")
-    private String department;
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.PERSIST})
+    @JoinColumn(name = "department_id")
+    private Department department;
 
-    public Employee(String name, String surname, Long salary, String department) {
+
+    public Employee(String name, String surname, Long salary) {
         this.name = name;
         this.surname = surname;
         this.salary = salary;
-        this.department = department;
     }
 
     public Employee() {
@@ -32,30 +32,39 @@ public class Employee {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSurname() {
         return surname;
     }
 
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     public Long getSalary() {
         return salary;
     }
 
-    public String getDepartment() {
+    public void setSalary(Long salary) {
+        this.salary = salary;
+    }
+
+    public Department getDepartment() {
         return department;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", salary=" + salary +
-                ", department='" + department + '\'' +
-                '}';
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }
